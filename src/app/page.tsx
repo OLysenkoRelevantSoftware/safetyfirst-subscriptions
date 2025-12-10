@@ -1,65 +1,144 @@
-import Image from "next/image";
+'use client';
+
+import Link from 'next/link';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Button from '@mui/material/Button';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import CheckIcon from '@mui/icons-material/Check';
+import { useTheme } from '@mui/material/styles';
+
+import { SINGLE_DRIVER, PEOPLE_COMPANY } from '@/constants';
 
 export default function Home() {
+  const theme = useTheme();
+
+  const plans = [
+    {
+      id: SINGLE_DRIVER,
+      title: 'Single driver',
+      priceMonthly: '£1.49',
+      periodMonthly: 'Monthly',
+      priceYearly: '£15.99',
+      periodYearly: 'Annual',
+      commentYearly: '*Min 3-month term',
+      features: ['eLearning'],
+      cta: 'Subscribe',
+    },
+    {
+      id: PEOPLE_COMPANY,
+      title: '2-20(50) people company',
+      priceMonthly: '£3.49',
+      periodMonthly: 'Monthly',
+      priceYearly: '£36.99',
+      periodYearly: 'Annual',
+      commentYearly: '*Min 3-month term',
+      features: ['DVLA (5/annual/driver)', 'Risk Assessment (8/annual/driver)', 'Quarterly eLearning (no ability to set the cadence)'],
+      cta: 'Subscribe',
+    },
+  ];
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <>
+      <Container maxWidth={false} disableGutters>
+        <Box
+          sx={{
+            bgcolor: theme.palette.background.paper,
+            pt: theme.spacing(4),
+            pb: theme.spacing(2),
+          }}
+        >
+          <Container maxWidth="lg">
+            <Typography variant="h4" component="h1" sx={{ mb: theme.spacing(2) }}>
+              Visibility. Simplicity. Control – sorted
+            </Typography>
+            <Typography variant="h6" component="p" sx={{ mb: theme.spacing(4), color: 'text.secondary' }}>
+              With RED Corporate Driver Training, not only can we provide the specific driver training and driver risk management products, training course services and other interventions for your drivers, SafetyFirst is the platform to ensure all information on all your drivers is visible, present, correct and helping you to run a safer and more efficient operation.
+            </Typography>
+            <Typography variant="h6" component="p" sx={{ mb: theme.spacing(4), color: 'text.secondary' }}>
+              It is also easy to access as an individual driver to populate core identity details, complete tasks requested of them such as online driver assessments, e-learning training modules and more.
+            </Typography>
+          </Container>
+        </Box>
+      </Container>
+
+      <Container maxWidth="lg">
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            py: theme.spacing(4),
+          }}
+        >
+          <Typography variant="h6" component="p" sx={{ mb: theme.spacing(4), color: 'text.secondary' }}>
+            Choose a subscription plan that fits your needs.
+          </Typography>
+
+          <Grid container spacing={6} sx={{ justifyContent: "center", mb: theme.spacing(4), width: '100%', maxWidth: '850px'}}>
+            {plans.map((plan) => (
+              <Grid sx={{ xs: 12, md: 6, width: '100%', maxWidth: "400px" }} key={plan.id}>
+                <Card variant="outlined" sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography variant="h5" component="h2" sx={{ mb: theme.spacing(1) }}>
+                      {plan.title}
+                    </Typography>
+
+                    <Box sx={{ display: 'flex', alignItems: 'baseline', mb: theme.spacing(2) }}>
+                      <Typography variant="h4" component="span" sx={{ mr: theme.spacing(1) }}>
+                        {plan.priceMonthly}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        /{plan.periodMonthly}
+                      </Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'baseline', mb: theme.spacing(2) }}>
+                      <Typography variant="h4" component="span" sx={{ mr: theme.spacing(1) }}>
+                        {plan.priceYearly}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        /{plan.periodYearly} ({plan.commentYearly})
+                      </Typography>
+                    </Box>
+
+                    <List dense>
+                      {plan.features.map((f) => (
+                        <ListItem key={f}>
+                          <ListItemIcon>
+                            <CheckIcon color="success" />
+                          </ListItemIcon>
+                          <ListItemText primary={f} />
+                        </ListItem>
+                      ))}
+                    </List>
+                  </CardContent>
+
+                  <CardActions sx={{ p: theme.spacing(2) }}>
+                    <Button
+                      component={Link}
+                      href={`/checkout/${plan.id}`}
+                      fullWidth
+                      variant={plan.id === 'people-company' ? 'contained' : 'outlined'}
+                      color="primary"
+                    >
+                      {plan.cta}
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      </Container>
+    </>
   );
 }
