@@ -1,27 +1,27 @@
-'use client';
+"use client";
 
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import NextLink from 'next/link';
-import { useParams } from 'next/navigation';
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import NextLink from "next/link";
+import { useParams } from "next/navigation";
 
-import { SINGLE_DRIVER, PEOPLE_COMPANY } from '@/constants';
+import { SINGLE_DRIVER, PEOPLE_COMPANY } from "@/constants";
 
 export default function About() {
   const params = useParams() as { slug?: string };
-  const subscriptionPlan = params?.slug ?? '';
+  const subscriptionPlan = params?.slug ?? "";
 
   return (
     <Container maxWidth="lg">
       <Box
         sx={{
           my: 4,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         {[SINGLE_DRIVER, PEOPLE_COMPANY].includes(subscriptionPlan) ? (
@@ -34,7 +34,7 @@ export default function About() {
           </Typography>
         )}
 
-        <Box sx={{ maxWidth: 'sm' }}>
+        <Box sx={{ maxWidth: "sm" }}>
           <Button variant="contained" component={NextLink} href="/">
             Go to the home page
           </Button>
