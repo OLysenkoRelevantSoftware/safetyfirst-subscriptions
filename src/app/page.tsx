@@ -158,7 +158,7 @@ export default function Home() {
                         {plan.priceMonthly}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        /{plan.periodMonthly}
+                        / {plan.periodMonthly}
                       </Typography>
                     </Box>
                     <Box
@@ -176,7 +176,7 @@ export default function Home() {
                         {plan.priceYearly}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        /{plan.periodYearly} ({plan.commentYearly})
+                        / {plan.periodYearly} ({plan.commentYearly})
                       </Typography>
                     </Box>
 

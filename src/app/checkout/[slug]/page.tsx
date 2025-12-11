@@ -12,6 +12,9 @@ import CardContent from "@mui/material/CardContent";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
@@ -235,7 +238,6 @@ export default function CheckoutPage() {
   const params = useParams() as { slug?: string };
   const subscriptionPlan: typeof SINGLE_DRIVER | typeof PEOPLE_COMPANY =
     params?.slug as typeof SINGLE_DRIVER | typeof PEOPLE_COMPANY;
-  console.log("subscriptionPlan =", subscriptionPlan);
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">(
     "monthly",
   );
@@ -264,31 +266,25 @@ export default function CheckoutPage() {
             <Card sx={{ maxWidth: 500, mb: 4, width: "100%" }}>
               <CardContent>
                 <Box sx={{ mb: 3 }}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      gap: 2,
-                      mb: 3,
-                      justifyContent: "center",
-                    }}
+                  <RadioGroup
+                    row
+                    value={billingPeriod}
+                    onChange={(e) =>
+                      setBillingPeriod(e.target.value as "monthly" | "yearly")
+                    }
+                    sx={{ justifyContent: "center", mb: 3, gap: 2 }}
                   >
-                    <Button
-                      variant={
-                        billingPeriod === "monthly" ? "contained" : "outlined"
-                      }
-                      onClick={() => setBillingPeriod("monthly")}
-                    >
-                      Місячна підписка
-                    </Button>
-                    <Button
-                      variant={
-                        billingPeriod === "yearly" ? "contained" : "outlined"
-                      }
-                      onClick={() => setBillingPeriod("yearly")}
-                    >
-                      Річна підписка
-                    </Button>
-                  </Box>
+                    <FormControlLabel
+                      value="monthly"
+                      control={<Radio />}
+                      label="Monthly"
+                    />
+                    <FormControlLabel
+                      value="yearly"
+                      control={<Radio />}
+                      label="Annual"
+                    />
+                  </RadioGroup>
 
                   <Box sx={{ textAlign: "center", mb: 3 }}>
                     <Typography variant="h5" component="p" sx={{ mb: 2 }}>
@@ -296,8 +292,8 @@ export default function CheckoutPage() {
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                       {billingPeriod === "monthly"
-                        ? "на місяць"
-                        : "на рік (мінімум 3 місяці)"}
+                        ? "Monthly"
+                        : "Annual (*Min 3-month term)"}
                     </Typography>
                   </Box>
                 </Box>
@@ -315,7 +311,7 @@ export default function CheckoutPage() {
                   href="/"
                   fullWidth
                 >
-                  На головну
+                  To Homepage
                 </Button>
               </CardContent>
             </Card>
