@@ -95,13 +95,13 @@ function PaymentForm({
     try {
       const cardElement = elements.getElement(CardElement);
       if (!cardElement) {
-        throw new Error("Форма карти не завантажена");
+        throw new Error("The card form is not loaded.");
       }
 
       const { token } = await stripe.createToken(cardElement);
 
       if (!token) {
-        throw new Error("Помилка при створенні токену");
+        throw new Error("Error creating token");
       }
 
       const priceId = plans[subscriptionPlan].priceIds[billingPeriod];
@@ -121,11 +121,11 @@ function PaymentForm({
       if (data.success) {
         setSuccess(true);
       } else {
-        setError(data.error || "Помилка при обробці платежу");
+        setError(data.error || "Error processing payment");
       }
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Невідома помилка при платежі",
+        err instanceof Error ? err.message : "Unknown error during payment",
       );
     } finally {
       setLoading(false);
@@ -135,7 +135,7 @@ function PaymentForm({
   if (success) {
     return (
       <Alert severity="success">
-        Платіж успішно оброблений! Спасибі за підписку.
+        Payment successfully processed! Thank you for subscribing.
       </Alert>
     );
   }
@@ -147,7 +147,7 @@ function PaymentForm({
           <TextField
             fullWidth
             required
-            label="Ім'я"
+            label="First Name"
             name="firstname"
             value={formData.firstname}
             onChange={handleInputChange}
@@ -156,7 +156,7 @@ function PaymentForm({
           <TextField
             fullWidth
             required
-            label="Прізвище"
+            label="Last Name"
             name="lastname"
             value={formData.lastname}
             onChange={handleInputChange}
@@ -175,8 +175,7 @@ function PaymentForm({
         />
         <TextField
           fullWidth
-          required
-          label="Телефон"
+          label="Phone"
           name="phone"
           value={formData.phone}
           onChange={handleInputChange}
@@ -184,7 +183,7 @@ function PaymentForm({
         />
         <TextField
           fullWidth
-          label="Назва компанії"
+          label="Company Name"
           name="companyName"
           value={formData.companyName}
           onChange={handleInputChange}
@@ -192,9 +191,9 @@ function PaymentForm({
         />
       </Box>
 
-      <Box sx={{ mb: 2 }}>
-        <Typography variant="body2" sx={{ mb: 1 }}>
-          Дані платіжної карти
+      <Box sx={{ mt: 2, mb: 4 }}>
+        <Typography variant="body2" sx={{ mb: 2 }}>
+          Payment card details
         </Typography>
         <CardElement
           options={{
@@ -228,7 +227,7 @@ function PaymentForm({
         disabled={!stripe || loading}
         sx={{ mb: 2 }}
       >
-        {loading ? <CircularProgress size={24} color="inherit" /> : "Оплатити"}
+        {loading ? <CircularProgress size={24} color="inherit" /> : "Pay Now"}
       </Button>
     </form>
   );
