@@ -50,10 +50,6 @@ export default function Home() {
     },
   ];
 
-  console.log('TEST_VAR_1 =', process.env.TEST_VAR_1);
-  console.log('TEST_VAR_2 =', process.env.TEST_VAR_2);
-  console.log('NEXT_PUBLIC_TEST_VAR_2 =', process.env.NEXT_PUBLIC_TEST_VAR_2);
-
   return (
     <>
       <Container maxWidth={false} disableGutters>
