@@ -65,7 +65,6 @@ function PaymentForm({
   const elements = useElements();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
 
   const [formData, setFormData] = useState({
     firstname: "",
@@ -119,7 +118,7 @@ function PaymentForm({
       const data = await response.json();
 
       if (data.success) {
-        setSuccess(true);
+        location.href = `/paid?plan=${subscriptionPlan}`;
       } else {
         setError(data.error || "Error processing payment");
       }
@@ -131,14 +130,6 @@ function PaymentForm({
       setLoading(false);
     }
   };
-
-  if (success) {
-    return (
-      <Alert severity="success">
-        Payment successfully processed! Thank you for subscribing.
-      </Alert>
-    );
-  }
 
   return (
     <form onSubmit={handleSubmit}>
