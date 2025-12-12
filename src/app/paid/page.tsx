@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import NextLink from "next/link";
 import Container from "@mui/material/Container";
@@ -8,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import CircularProgress from "@mui/material/CircularProgress";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 import { SINGLE_DRIVER, PEOPLE_COMPANY } from "@/constants";
@@ -17,7 +19,7 @@ const planNames = {
   [PEOPLE_COMPANY]: '"2-20(50) people company" subscription plan',
 };
 
-export default function Paid() {
+function PaidContent() {
   const searchParams = useSearchParams();
   const plan = searchParams.get("plan") as
     | typeof SINGLE_DRIVER
@@ -87,5 +89,28 @@ export default function Paid() {
         </Card>
       </Box>
     </Container>
+  );
+}
+
+export default function Paid() {
+  return (
+    <Suspense
+      fallback={
+        <Container maxWidth="lg">
+          <Box
+            sx={{
+              my: 8,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        </Container>
+      }
+    >
+      <PaidContent />
+    </Suspense>
   );
 }
