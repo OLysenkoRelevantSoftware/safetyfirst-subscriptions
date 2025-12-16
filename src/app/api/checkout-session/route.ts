@@ -56,19 +56,49 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Create or get a customer
-    const customer = await stripe.customers.create({
-      email,
-      name: [firstname, lastname].join(" "),
-      phone: phone,
-      description: companyName ? `Company: ${companyName}` : undefined,
-      metadata: {
-        firstname: firstname || "",
-        lastname: lastname || "",
-        companyName: companyName || "",
-      },
-      source: token,
+    // Search for existing customer by email
+    const existingCustomers = await stripe.customers.list({
+      email: email,
+      limit: 1,
     });
+
+    let customer: Stripe.Customer;
+
+    if (existingCustomers.data.length > 0) {
+      // Customer exists - use existing one
+      customer = existingCustomers.data[0];
+
+      // Update customer info if provided
+      if (firstname || lastname || phone || companyName) {
+        customer = await stripe.customers.update(customer.id, {
+          name: [firstname, lastname].filter(Boolean).join(" ") || undefined,
+          phone: phone || undefined,
+          description: companyName ? `Company: ${companyName}` : undefined,
+          metadata: {
+            firstname: firstname || customer.metadata.firstname || "",
+            lastname: lastname || customer.metadata.lastname || "",
+            companyName: companyName || customer.metadata.companyName || "",
+          },
+        });
+      }
+
+      // Add payment method to existing customer
+      await stripe.customers.createSource(customer.id, { source: token });
+    } else {
+      // Create new customer
+      customer = await stripe.customers.create({
+        email,
+        name: [firstname, lastname].join(" "),
+        phone: phone,
+        description: companyName ? `Company: ${companyName}` : undefined,
+        metadata: {
+          firstname: firstname || "",
+          lastname: lastname || "",
+          companyName: companyName || "",
+        },
+        source: token,
+      });
+    }
 
     // Create a subscription using the provided priceId
     const subscription = await stripe.subscriptions.create({
@@ -78,6 +108,11 @@ export async function POST(req: NextRequest) {
       collection_method: "charge_automatically",
       // Expand latest invoice payment intent for richer status if needed
       expand: ["latest_invoice.payment_intent"],
+      // Automatically send receipt email
+      payment_settings: {
+        payment_method_types: ["card"],
+        save_default_payment_method: "on_subscription",
+      },
     });
 
     // Determine immediate success based on status
