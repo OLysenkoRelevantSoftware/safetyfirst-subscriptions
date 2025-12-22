@@ -25,6 +25,7 @@ export async function POST(req: NextRequest) {
     const {
       priceId,
       token, // token.id from Stripe Elements createToken
+      quantity = 1,
       firstname,
       lastname,
       email,
@@ -77,7 +78,10 @@ export async function POST(req: NextRequest) {
           metadata: {
             firstname: firstname || customer.metadata.firstname || "",
             lastname: lastname || customer.metadata.lastname || "",
+            email: email || customer.metadata.email || "",
+            phone: phone || customer.metadata.phone || "",
             companyName: companyName || customer.metadata.companyName || "",
+            quantity: quantity.toString(),
           },
         });
       }
@@ -94,7 +98,10 @@ export async function POST(req: NextRequest) {
         metadata: {
           firstname: firstname || "",
           lastname: lastname || "",
+          email: email || "",
+          phone: phone || "",
           companyName: companyName || "",
+          quantity: quantity.toString(),
         },
         source: token,
       });
@@ -103,7 +110,7 @@ export async function POST(req: NextRequest) {
     // Create a subscription using the provided priceId
     const subscription = await stripe.subscriptions.create({
       customer: customer.id,
-      items: [{ price: priceId }],
+      items: [{ price: priceId, quantity }],
       // Collection method via invoice will attempt payment immediately using default source
       collection_method: "charge_automatically",
       // Expand latest invoice payment intent for richer status if needed
@@ -112,6 +119,15 @@ export async function POST(req: NextRequest) {
       payment_settings: {
         payment_method_types: ["card"],
         save_default_payment_method: "on_subscription",
+      },
+      // Add metadata for easy tracking in Stripe Dashboard
+      metadata: {
+        firstname: firstname || "",
+        lastname: lastname || "",
+        email: email || "",
+        phone: phone || "",
+        companyName: companyName || "",
+        quantity: quantity.toString(),
       },
     });
 

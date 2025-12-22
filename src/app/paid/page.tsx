@@ -16,7 +16,7 @@ import { SINGLE_DRIVER, PEOPLE_COMPANY } from "@/constants";
 
 const planNames = {
   [SINGLE_DRIVER]: '"Single driver" subscription plan',
-  [PEOPLE_COMPANY]: '"2-20(50) people company" subscription plan',
+  [PEOPLE_COMPANY]: '"Small Company" subscription plan',
 };
 
 function PaidContent() {

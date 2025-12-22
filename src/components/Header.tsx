@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 
 import theme from "@/theme";
 
-export default function Header() {
+export const Header = () => {
   return (
     <AppBar
       position="static"
@@ -75,4 +75,4 @@ export default function Header() {
       </Container>
     </AppBar>
   );
-}
+};

@@ -5,10 +5,10 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
-import { useTheme } from "@mui/material/styles";
 
-export default function Footer() {
-  const theme = useTheme();
+import theme from "@/theme";
+
+export const Footer = () => {
   const phoneHref = "+443713460798";
   const phoneDisplay = "0371 346 0798";
   const currentYear = new Date().getFullYear();
@@ -94,4 +94,4 @@ export default function Footer() {
       </Container>
     </Box>
   );
-}
+};
