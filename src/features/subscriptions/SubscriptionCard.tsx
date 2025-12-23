@@ -43,19 +43,29 @@ export const SubscriptionCard = ({ plan }: { plan: PlanModel }) => {
             >
               {plan.title}
             </Typography>
-            {plan.description && (
+            {plan.subtitle ? (
               <Typography
                 variant="body2"
                 color="text.secondary"
                 sx={{
                   mt: theme.spacing(0.5),
-                  textAlign: "right",
+                  textAlign: "center",
                 }}
               >
-                {plan.description}
+                {plan.subtitle}
               </Typography>
+            ) : (
+              <Box sx={{ py: theme.spacing(1.5) }} />
             )}
           </Box>
+
+          {plan.description && (
+            <Box sx={{ mb: theme.spacing(2) }}>
+              <Typography variant="body2" color="text.secondary">
+                {plan.description}
+              </Typography>
+            </Box>
+          )}
 
           <Box
             sx={{

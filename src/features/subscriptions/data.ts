@@ -17,7 +17,7 @@ export const plans: PlanModel[] = [
   {
     id: PEOPLE_COMPANY,
     title: "Small Company",
-    description: "* 2-50 drivers",
+    subtitle: "(* 2-50 drivers)",
     priceMonthly: "£3.49",
     periodMonthly: "Monthly",
     commentMonthly: "*Min 3-month term",
@@ -30,6 +30,8 @@ export const plans: PlanModel[] = [
   {
     id: CORPORATE_COMPANY,
     title: "Corporate SafetyFirst",
+    description:
+      "Fill out our contact form below for a demonstration of the system from one of our Corporate Account Management team members.",
     features: [],
     ctaLabel: "Contact Us",
     ctaLink: "https://redtraining.com/contact-form-2/",

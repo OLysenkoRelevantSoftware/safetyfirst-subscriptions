@@ -85,82 +85,108 @@ export default function SingleDriverPage() {
           Subscription Plan Details
         </Typography>
 
-        <Box sx={{ mb: 4, maxWidth: 600, width: "100%" }}>
-          <Typography variant="h6" component="h2" sx={{ mb: 0.5 }}>
-            eLearning modules:
-          </Typography>
-          <Typography variant="body1" component="div">
-            • Motorway driving
-            <br />
-            • Rural driving
-            <br />
-            • Urban driving
-            <br />
-            • Speed awareness
-            <br />
-            • Fatigue
-            <br />
-            • Share the Road
-            <br />
-            • Eco-driving (good for fossil fuel or alternatively powered
-            vehicles)
-            <br />• Parking and slow-speed manoeuvring
-          </Typography>
-        </Box>
-
-        <Card sx={{ maxWidth: 500, mb: 4, width: "100%" }}>
-          <CardContent>
-            <Typography
-              variant="h6"
-              component="h2"
-              sx={{ mb: 0.5, textAlign: "center" }}
-            >
-              Select preferable plan
+        <Box
+          sx={{
+            my: 4,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            gap: 4,
+          }}
+        >
+          <Box
+            sx={{
+              mb: 4,
+              maxWidth: 400,
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h6" component="h2" sx={{ mb: 0.5 }}>
+              eLearning modules:
             </Typography>
-            <Box sx={{ mb: 3 }}>
-              <RadioGroup
-                row
-                value={period}
-                onChange={(e) =>
-                  setPeriod(e.target.value as "monthly" | "yearly")
-                }
-                sx={{ justifyContent: "center", mb: 3, gap: 2 }}
+            <Typography variant="body1" component="div">
+              • Motorway driving
+              <br />
+              • Rural driving
+              <br />
+              • Urban driving
+              <br />
+              • Speed awareness
+              <br />
+              • Fatigue
+              <br />
+              • Share the Road
+              <br />
+              • Eco-driving (good for fossil fuel or alternatively powered
+              vehicles)
+              <br />• Parking and slow-speed manoeuvring
+            </Typography>
+          </Box>
+
+          <Card sx={{ maxWidth: 500, mb: 4, width: "100%" }}>
+            <CardContent>
+              <Typography
+                variant="h6"
+                component="h2"
+                sx={{ mb: 0.5, textAlign: "center" }}
               >
-                <FormControlLabel
-                  value="monthly"
-                  control={<Radio />}
-                  label="Monthly"
-                />
-                <FormControlLabel
-                  value="yearly"
-                  control={<Radio />}
-                  label="Annual"
-                />
-              </RadioGroup>
+                Select preferable plan
+              </Typography>
+              <Box sx={{ mb: 3 }}>
+                <RadioGroup
+                  row
+                  value={period}
+                  onChange={(e) =>
+                    setPeriod(e.target.value as "monthly" | "yearly")
+                  }
+                  sx={{ justifyContent: "center", mb: 3, gap: 2 }}
+                >
+                  <FormControlLabel
+                    value="monthly"
+                    control={<Radio />}
+                    label="Monthly"
+                  />
+                  <FormControlLabel
+                    value="yearly"
+                    control={<Radio />}
+                    label="Annual"
+                  />
+                </RadioGroup>
 
-              <Box sx={{ textAlign: "center", mb: 3 }}>
-                <Typography variant="h5" component="p" sx={{ mb: 2 }}>
-                  {prices[period].value}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {prices[period].title}
-                </Typography>
+                <Box sx={{ textAlign: "center", mb: 3 }}>
+                  <Typography variant="h5" component="p" sx={{ mb: 2 }}>
+                    {prices[period].value}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {prices[period].title}
+                  </Typography>
+                </Box>
               </Box>
-            </Box>
 
-            <Elements stripe={stripePromise}>
-              <PaymentForm
-                priceId={prices[period].id}
-                successUrl={`/paid?plan=${SINGLE_DRIVER}`}
-                fields={fields}
-              />
-            </Elements>
+              <Elements stripe={stripePromise}>
+                <PaymentForm
+                  priceId={prices[period].id}
+                  successUrl={`/paid?plan=${SINGLE_DRIVER}`}
+                  fields={fields}
+                />
+              </Elements>
 
-            <Button variant="outlined" component={NextLink} href="/" fullWidth>
-              Homepage
-            </Button>
-          </CardContent>
-        </Card>
+              <Button
+                variant="outlined"
+                component={NextLink}
+                href="/"
+                fullWidth
+              >
+                Homepage
+              </Button>
+            </CardContent>
+          </Card>
+        </Box>
       </Box>
     </Container>
   );
